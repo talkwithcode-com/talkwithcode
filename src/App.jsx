@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
-import { HomePage, RoomPage } from "./pages"
+import { DummyPage, HomePage, RoomPage, Dashboard } from "./pages"
 import DocumentProvider from "./providers/DocumentProvider"
 import LanguageProvider from "./providers/LanguageProvider"
 
@@ -10,7 +10,10 @@ export default function App() {
         <BrowserRouter>
             <Switch>
                 <Route exact path="/">
-                    <HomePage />
+                    <Dashboard />
+                </Route>
+                <Route path="/code">
+                    <DummyPage />
                 </Route>
                 <Route exact path="/room">
                     <DocumentProvider>
