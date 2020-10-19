@@ -1,5 +1,5 @@
-import Editor from "./Editor"
+import Editor from "./editor"
 import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 
-export default { Navbar, Sidebar, Editor }
+export { Navbar, Sidebar, Editor }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import {
     Accordion,
     AccordionItem,
@@ -10,7 +10,8 @@ import {
     AccordionPanel,
     Stack,
 } from "@chakra-ui/core"
-import exampleUnified from "../components/exampleUnified"
+
+import exampleUnified from "../lib/exampleUnified"
 
 export default function DummyPage() {
     /*

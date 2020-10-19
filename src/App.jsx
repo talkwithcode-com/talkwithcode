@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
-import { DummyPage, HomePage, RoomPage, Dashboard } from "./pages"
+import { DummyPage, RoomPage, Dashboard } from "./pages"
 import DocumentProvider from "./providers/DocumentProvider"
 import LanguageProvider from "./providers/LanguageProvider"
 
