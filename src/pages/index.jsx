@@ -1,4 +1,7 @@
 import HomePage from "./HomePage"
 import Dashboard from "./Dashboard"
 
-export { HomePage, Dashboard }
+
+import DummyPage from "./DummyPage"
+
+export { HomePage, DummyPage, Dashboard }
