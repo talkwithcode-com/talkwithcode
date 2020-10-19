@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import { HomePage } from "./pages"
+import { DummyPage, HomePage } from "./pages"
 
 export default function App() {
     return (
@@ -8,6 +8,9 @@ export default function App() {
             <Switch>
                 <Route exact path="/">
                     <HomePage />
+                </Route>
+                <Route path="/code">
+                    <DummyPage />
                 </Route>
             </Switch>
         </BrowserRouter>
