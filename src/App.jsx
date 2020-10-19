@@ -1,6 +1,9 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import { DummyPage, HomePage, Dashboard
+
+import { DummyPage, HomePage, RoomPage, Dashboard } from "./pages"
+import DocumentProvider from "./providers/DocumentProvider"
+import LanguageProvider from "./providers/LanguageProvider"
 
 export default function App() {
     return (
@@ -11,6 +14,13 @@ export default function App() {
                 </Route>
                 <Route path="/code">
                     <DummyPage />
+                </Route>
+                <Route exact path="/room">
+                    <DocumentProvider>
+                        <LanguageProvider>
+                            <RoomPage />
+                        </LanguageProvider>
+                    </DocumentProvider>
                 </Route>
             </Switch>
         </BrowserRouter>
