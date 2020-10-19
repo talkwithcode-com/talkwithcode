@@ -1,13 +1,13 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import { DummyPage, HomePage } from "./pages"
+import { DummyPage, HomePage, Dashboard
 
 export default function App() {
     return (
         <BrowserRouter>
             <Switch>
                 <Route exact path="/">
-                    <HomePage />
+                    <Dashboard />
                 </Route>
                 <Route path="/code">
                     <DummyPage />
