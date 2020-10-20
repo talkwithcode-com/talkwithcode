@@ -10,6 +10,7 @@ import Rooms from "./Rooms"
 import FormRoom from "./FormRoom"
 import FormSampleSolution from "./FormSampleSolution"
 import FormSolution from "./FormSolution"
+import LandingPage from './LandingPage'
 
 export {
     HomePage,
@@ -24,4 +25,5 @@ export {
     FormRoom,
     FormSampleSolution,
     FormSolution,
+    LandingPage
 }
