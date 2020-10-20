@@ -7,7 +7,7 @@ import useEditorTheme from "../../hooks/useEditorTheme"
 import { LanguageContext } from "../../providers/LanguageProvider"
 import EditorThemeProvider from "../../providers/EditorThemeProvider"
 
-const Editor = ({ updateValue, defaultValue }) => {
+const Editor = ({ updateValue }) => {
     const [editor, setEditor] = useState()
     const { colorMode } = useColorMode()
     const { theme } = useEditorTheme()
@@ -23,9 +23,8 @@ const Editor = ({ updateValue, defaultValue }) => {
             theme: "eclipse",
             mode: "go",
         })
-        _editor.setDefaultValue(defaultValue)
         setEditor(_editor)
-    }, [defaultValue])
+    }, [])
 
     useEffect(() => {
         if (editor) editor.updateTheme(theme)
@@ -43,7 +42,7 @@ const Editor = ({ updateValue, defaultValue }) => {
         <Flex flex={1} flexDirection="column" zIndex={10}>
             <EditorThemeProvider colorMode={colorMode}>
                 <EditorToolbars />
-                <Textarea ref={textareaRef} />
+                <Textarea onChange={console.log} ref={textareaRef} />
             </EditorThemeProvider>
         </Flex>
     )

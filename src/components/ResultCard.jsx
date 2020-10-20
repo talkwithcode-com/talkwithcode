@@ -1,14 +1,10 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { Box, Button, Flex, IconButton, Spinner } from "@chakra-ui/core"
 
-import { DocumentContext } from "../providers/DocumentProvider"
-import { LanguageContext } from "../providers/LanguageProvider"
 import * as codex from "../service/codex"
 
-function ResultCard() {
+function ResultCard({ data }) {
     const [loading, setLoading] = useState(false)
-    const { value: code } = useContext(DocumentContext)
-    const { value: lang } = useContext(LanguageContext)
     const [outputs, setOutputs] = useState([])
     const [show, setShow] = useState(false)
 
@@ -16,7 +12,7 @@ function ResultCard() {
         setLoading(true)
         setShow(true)
         codex
-            .runCode(code, lang)
+            .runCode(data.code, data.lang)
             .then((e) => e.data)
             .then((data) => {
                 setLoading(false)

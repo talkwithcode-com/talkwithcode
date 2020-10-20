@@ -45,4 +45,4 @@ const SlideFromLeft = styled.div`
     }
 `
 
-export default MdView
+export default React.memo(MdView)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import {
     Accordion,
     AccordionHeader,
@@ -9,17 +9,11 @@ import {
     Heading,
 } from "@chakra-ui/core"
 import MdView from "./mdv"
-import temp from "../temp/question"
 import parser from "../lib/exampleUnified"
 
-function QuestionView() {
-    const [questions, setQuestions] = useState([])
-
-    useEffect(() => {
-        setQuestions(temp.questions)
-    }, [])
+function QuestionView({ questions, onChange }) {
     return (
-        <Accordion p="2" flex="1" onChange={(index) => console.log(index)}>
+        <Accordion p="2" flex="1" onChange={onChange}>
             {questions.map((q) => {
                 return (
                     <AccordionItem py="4" key={q.id}>

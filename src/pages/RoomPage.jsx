@@ -1,12 +1,22 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Flex, Stack, useColorMode } from "@chakra-ui/core"
 import { Editor, ResultCard, QuestionView } from "../components"
-import { DocumentContext } from "../providers/DocumentProvider"
+import { LanguageContext } from "../providers/LanguageProvider"
+
+import temp from "../temp/question"
 
 export default function PageRoom() {
     const { colorMode } = useColorMode()
 
-    const { defaultValue, updateValue } = useContext(DocumentContext)
+    const { value: lang } = useContext(LanguageContext)
+    const [questions, setQuestions] = useState([])
+    const [code, setCode] = useState("")
+    const [active, setActive] = useState(0)
+
+    useEffect(() => {
+        const quests = temp.questions
+        setQuestions(quests)
+    }, [])
 
     return (
         <Flex w="100%" h="100vh">
@@ -16,11 +26,16 @@ export default function PageRoom() {
                 direction="column"
                 maxW="50%"
             >
-                <Editor defaultValue={defaultValue} updateValue={updateValue} />
-                <ResultCard />
+                <Editor value="" updateValue={setCode} />
+                <ResultCard
+                    data={{ code, lang, question_id: questions[active] }}
+                />
             </Flex>
             <Stack flex="1" spacing={8}>
-                <QuestionView />
+                <QuestionView
+                    questions={questions}
+                    onChange={(i) => setActive(i)}
+                />
             </Stack>
         </Flex>
     )
