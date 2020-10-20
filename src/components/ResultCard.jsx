@@ -5,7 +5,7 @@ import { DocumentContext } from "../providers/DocumentProvider"
 import { LanguageContext } from "../providers/LanguageProvider"
 import * as codex from "../service/codex"
 
-export default function ResultCard() {
+function ResultCard() {
     const [loading, setLoading] = useState(false)
     const { value: code } = useContext(DocumentContext)
     const { value: lang } = useContext(LanguageContext)
@@ -95,3 +95,5 @@ export default function ResultCard() {
         </Flex>
     )
 }
+
+export default React.memo(ResultCard)
