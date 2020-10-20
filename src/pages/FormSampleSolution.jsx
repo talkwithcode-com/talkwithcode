@@ -66,7 +66,7 @@ export default function FormSampleSolution() {
                     <form onSubmit={(event) => handleOnSubmit(event)}>
                         <FormControl margin={4} pb={4} w="100%">
                             <FormLabel color="white">
-                                Input for Solution
+                                Input for Sample Solution
                             </FormLabel>
                             <Textarea
                                 name="input"

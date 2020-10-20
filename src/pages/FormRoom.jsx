@@ -73,7 +73,7 @@ export default function FormRoom() {
 
     return (
         <>
-            <Flex w="100%" h="100vh">
+            <Flex flex="1" w="100%" h="100vh">
                 <Flex flex="1" bg="#56657F" direction="column" padding="2">
                     <Sidebar />
                 </Flex>
@@ -82,10 +82,16 @@ export default function FormRoom() {
                     direction="column"
                     bg="gray.800"
                     alignItems="center"
-                    justifyContent="center"
+                    justify="center"
                 >
                     <Heading color="white">Add Your Room Here!</Heading>
-                    <form onSubmit={(event) => handleOnSubmit(event)}>
+                    <Flex
+                        direction="column"
+                        onSubmit={(event) => handleOnSubmit(event)}
+                        as="form"
+                        w="60%"
+                        align="center"
+                    >
                         <FormControl margin={4} pb={4} w="100%">
                             <FormLabel color="white">Room Title</FormLabel>
                             <Input
@@ -143,7 +149,7 @@ export default function FormRoom() {
                         >
                             <Text>Submit</Text>
                         </Button>
-                    </form>
+                    </Flex>
                 </Flex>
             </Flex>
         </>
