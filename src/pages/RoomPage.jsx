@@ -1,11 +1,13 @@
 import React, { useContext } from "react"
-import { Flex } from "@chakra-ui/core"
+import { Flex, useColorMode } from "@chakra-ui/core"
 
 import { Editor } from "../components"
 import { DocumentContext } from "../providers/DocumentProvider"
 import { LanguageContext } from "../providers/LanguageProvider"
+import ResultCard from "../components/ResultCard"
 
 export default function PageRoom() {
+    const { colorMode } = useColorMode()
     const { defaultValue, updateValue, value: code } = useContext(
         DocumentContext
     )
@@ -15,11 +17,16 @@ export default function PageRoom() {
 
     return (
         <Flex w="100%" h="100vh">
-            <Flex flex="1" bg="blue.500" direction="column">
+            <Flex
+                flex="1"
+                bg={colorMode === "light" ? "gray.200" : "gray.700"}
+                direction="column"
+                maxW="50%"
+            >
                 <Editor defaultValue={defaultValue} updateValue={updateValue} />
-                <Flex h="50px" bg="purple.500"></Flex>
+                <ResultCard />
             </Flex>
-            <Flex flex="1" bg="red.500"></Flex>
+            <Flex flex="1"></Flex>
         </Flex>
     )
 }
