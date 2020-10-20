@@ -16,11 +16,9 @@ export default function App() {
                     <DummyPage />
                 </Route>
                 <Route exact path="/room">
-                    <DocumentProvider>
-                        <LanguageProvider>
-                            <RoomPage />
-                        </LanguageProvider>
-                    </DocumentProvider>
+                    <LanguageProvider>
+                        <RoomPage />
+                    </LanguageProvider>
                 </Route>
             </Switch>
         </BrowserRouter>

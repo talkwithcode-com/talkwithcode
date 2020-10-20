@@ -1,15 +1,19 @@
-var unified = require("unified")
-var markdown = require("remark-parse")
-var remark2rehype = require("remark-rehype")
-var format = require("rehype-format")
-var html = require("rehype-stringify")
-const remarkMath = require("remark-math")
-const rehypeKatex = require("rehype-katex")
+import unified from "unified"
+import markdown from "remark-parse"
+import remark2rehype from "remark-rehype"
+import format from "rehype-format"
+import html from "rehype-stringify"
+import remarkMath from "remark-math"
+import rehypeKatex from "rehype-katex"
+import breaks from "remark-breaks"
+import prims from "mdx-prism"
 
 var processor = unified()
     .use(markdown)
+    .use(breaks)
     .use(remarkMath)
     .use(remark2rehype)
+    .use(prims)
     .use(format)
     .use(rehypeKatex)
     .use(html)
