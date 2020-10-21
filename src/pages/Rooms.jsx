@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { Text, Flex, Heading } from "@chakra-ui/core"
+import { Text, Flex, Heading, Button } from "@chakra-ui/core"
 import Sidebar from "../components/Sidebar"
 import TableBody from "../components/TableBody"
+import { Link } from "react-router-dom"
 
 export default function Rooms() {
     const [rooms, setRooms] = useState([
@@ -106,9 +107,27 @@ export default function Rooms() {
                     alignItems="center"
                     overflow="auto"
                 >
-                    <Heading mt="5" color="white">
-                        List of Rooms
-                    </Heading>
+                    <Flex align="center" w="80%" mb="5">
+                        <Flex flex="4">
+                            <Heading
+                                mt="5"
+                                ml="10"
+                                color="white"
+                                justifyContent="center"
+                                alignSelf="center"
+                            >
+                                List of Rooms
+                            </Heading>
+                        </Flex>
+                        <Flex mt="5" flex="1" justify="end">
+                            <Link to="/join-room">
+                                <Button variantColor="teal" variant="outline">
+                                    Join Room
+                                </Button>
+                            </Link>
+                        </Flex>
+                    </Flex>
+
                     {rooms.map((room) => {
                         return <TableBody key={room.ids} room={room} />
                     })}
