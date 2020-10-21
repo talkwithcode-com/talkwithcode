@@ -17,7 +17,6 @@ export default function PageRoom() {
 
     const { value: lang } = useContext(LanguageContext)
     const [code, setCode] = useState("")
-    const [active, setActive] = useState(0)
 
     if (loading) {
         return (
@@ -44,19 +43,9 @@ export default function PageRoom() {
                 maxW="50%"
             >
                 <Editor value="" updateValue={setCode} />
-                <ResultCard
-                    data={{
-                        code,
-                        lang,
-                        question_id: "5f8fe7703324b65711dac5da",
-                    }}
-                />
             </Flex>
             <Stack flex="1" spacing={8}>
-                <QuestionView
-                    questions={questions}
-                    onChange={(i) => setActive(i)}
-                />
+                <QuestionView questions={questions} />
             </Stack>
         </Flex>
     )

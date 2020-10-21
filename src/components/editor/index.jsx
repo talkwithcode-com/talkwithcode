@@ -1,13 +1,19 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
 import { Flex, Textarea, useColorMode } from "@chakra-ui/core"
-
-import CodeMirror from "./engine/CodeMirror"
-import EditorToolbars from "./EditorToolbars"
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react"
 import useEditorTheme from "../../hooks/useEditorTheme"
-import { LanguageContext } from "../../providers/LanguageProvider"
 import EditorThemeProvider from "../../providers/EditorThemeProvider"
+import { LanguageContext } from "../../providers/LanguageProvider"
+import EditorFooter from "./EditorFooter"
+import EditorToolbars from "./EditorToolbars"
+import CodeMirror from "./engine/CodeMirror"
 
-const Editor = ({ updateValue }) => {
+const Editor = ({ updateValue, onRun, onSubmit }) => {
     const [editor, setEditor] = useState()
     const { colorMode } = useColorMode()
     const { theme } = useEditorTheme()
@@ -35,17 +41,36 @@ const Editor = ({ updateValue }) => {
     }, [editor, mode])
 
     useEffect(() => {
-        if (editor) editor.onValueChange(updateValue)
+        if (editor && updateValue) editor.onValueChange(updateValue)
     }, [updateValue, editor])
 
+    const handleRun = useCallback(() => {
+        if (editor) {
+            onRun(editor.getValue())
+        }
+    }, [editor, onRun])
+
+    const handleSubmit = useCallback(() => {
+        if (editor) {
+            onSubmit(editor.getValue())
+        }
+    }, [editor, onSubmit])
+
     return (
-        <Flex flex={1} flexDirection="column" zIndex={10}>
+        <Flex
+            flex={1}
+            flexDirection="column"
+            zIndex={10}
+            borderRadius="4"
+            overflow="hidden"
+        >
             <EditorThemeProvider colorMode={colorMode}>
                 <EditorToolbars />
                 <Textarea onChange={console.log} ref={textareaRef} />
+                <EditorFooter onRun={handleRun} onSubmit={handleSubmit} />
             </EditorThemeProvider>
         </Flex>
     )
 }
 
-export default React.memo(Editor)
+export default Editor

@@ -14,10 +14,11 @@ import {
     Rooms,
     LandingPage,
 } from "./pages"
-import DocumentProvider from "./providers/DocumentProvider"
+
 import LanguageProvider from "./providers/LanguageProvider"
 import client from "./graphql/config"
 import { ApolloProvider } from "@apollo/client"
+import CodeSandbox from "./pages/CodeSandbox"
 
 export default function App() {
     return (
@@ -56,6 +57,11 @@ export default function App() {
                     </Route>
                     <Route path="/rooms-list">
                         <Rooms />
+                    </Route>
+                    <Route path="/sandbox/:id">
+                        <LanguageProvider>
+                            <CodeSandbox />
+                        </LanguageProvider>
                     </Route>
                     <Route exact path="/room">
                         <LanguageProvider>

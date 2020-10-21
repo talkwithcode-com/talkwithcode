@@ -14,16 +14,22 @@ export const RUN_CODE = gql`
 export const GET_QUESTION = gql`
     query GetQuestion($access_token: String) {
         questions(access_token: $access_token) {
-            id
+            _id
+            title
+        }
+    }
+`
+
+export const GET_QUESTION_BY_ID = gql`
+    query GetQuestionById($access_token: String, $id: String) {
+        question(access_token: $access_token, _id: $id) {
+            _id
             title
             description
             sample_solution {
                 input
                 output
-            }
-            solution {
-                input
-                output
+                _id
             }
         }
     }
