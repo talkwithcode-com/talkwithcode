@@ -62,31 +62,29 @@ export const POST_LOGIN = gql`
 //     }
 // `
 
-// export const POST_QUESTION = gql`
-//     mutation AddQuestion(
-//         $timeLimit: timeLimit
-//         $title: title
-//         $score: score
-//         $description: description
-//         $user_id: user_id
-//         $access_token: access_token
-//     ) {
-//         addQuestion(
-//             timeLimit: $timeLimit
-//             title: $title
-//             score: $score
-//             description: $description
-//             user_id: $user_id
-//             access_token: $acces_token
-//         ) {
-//             id
-//             title
-//             score
-//             description
-//             user_id
-//         }
-//     }
-// `
+export const POST_QUESTION = gql`
+    mutation AddQuestion(
+        $timeLimit: Float
+        $title: String
+        $score: String
+        $description: String
+        $user_id: String
+        $access_token: String
+    ) {
+        addQuestion(
+            timeLimit: $timeLimit
+            title: $title
+            score: $score
+            description: $description
+            user_id: $user_id
+            access_token: $access_token
+        ) {
+            title
+            score
+            description
+        }
+    }
+`
 
 // export const POST_SOLUTION = gql`
 //     mutation AddSolution(
