@@ -84,7 +84,9 @@ export default function LandingPage() {
                     isClosable: true,
                 })
             })
-            .catch(console.log)
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     function buttonLogin(event) {

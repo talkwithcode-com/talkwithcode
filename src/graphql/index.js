@@ -12,27 +12,28 @@ export const POST_LOGIN = gql`
     }
 `
 
-// export const GET_QUESTIONS = gql`
-//     query Questions($access_token: access_token){
-//         questions(access_token: $access_token) {
-//             id
-//             title
-//             score
-//             description
-//             user_id
-//             sample_solution: {
-//                 _id
-//                 input
-//                 output
-//             }
-//             solution: {
-//                 _id
-//                 input
-//                 output
-//             }
-//         })
-//     }
-// `
+
+export const GET_QUESTIONS = gql`
+    query Questions($access_token: String) {
+        questions(access_token: $access_token) {
+            id
+            title
+            score
+            description
+            user_id
+            sample_solution {
+                _id
+                input
+                output
+            }
+            solution {
+                _id
+                input
+                output
+            }
+        }
+    }
+`
 
 // export const GET_QUESTIONS_BY_ID = gql`
 //     query Question(

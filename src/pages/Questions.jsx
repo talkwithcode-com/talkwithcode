@@ -1,32 +1,38 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Text, Flex, Heading } from "@chakra-ui/core"
 import Sidebar from "../components/Sidebar"
 import TableBody from "../components/TableBody"
+import { useQuery } from '@apollo/client'
+import { GET_QUESTIONS } from "../graphql/index"
+
 
 export default function Questions() {
-    const [questions, setQuestions] = useState([
-        {
-            _id: "title id 1",
-            title: "title 1",
-            description: "description 1",
-            score: 10,
-            timeLimit: 40,
-        },
-        {
-            _id: "title id 2",
-            title: "title 2",
-            description: "description 2",
-            score: 10,
-            timeLimit: 40,
-        },
-        {
-            _id: "title id 3",
-            title: "title 3",
-            description: "description 3",
-            score: 10,
-            timeLimit: 40,
-        },
-    ])
+    const { data, loading, error, refetch } = useQuery(GET_QUESTIONS)
+    
+    // const [questions, setQuestions] = useState([
+    //     {
+    //         _id: "title id 1",
+    //         title: "title 1",
+    //         description: "description 1",
+    //         score: 10,
+    //         timeLimit: 40,
+    //     },
+    //     {
+    //         _id: "title id 2",
+    //         title: "title 2",
+    //         description: "description 2",
+    //         score: 10,
+    //         timeLimit: 40,
+    //     },
+    //     {
+    //         _id: "title id 3",
+    //         title: "title 3",
+    //         description: "description 3",
+    //         score: 10,
+    //         timeLimit: 40,
+    //     },
+    // ])
+
     return (
         <>
             <Flex w="100%" h="100vh">
@@ -43,7 +49,7 @@ export default function Questions() {
                     <Heading mt="5" color="white">
                         List of Questions
                     </Heading>
-                    {questions.map((question) => {
+                    {data?.questions.map((question) => {
                         return (
                             <TableBody key={question._id} question={question} />
                         )
