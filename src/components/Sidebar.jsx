@@ -3,20 +3,13 @@ import {
     Avatar,
     Button,
     Flex,
-    Icon,
     Menu,
     MenuButton,
     MenuItem,
     MenuList,
-    Text,
 } from "@chakra-ui/core"
-import {
-    MdDashboard,
-    MdQuestionAnswer,
-    MdList,
-    MdSchedule,
-    MdSettings,
-} from "react-icons/md"
+import { MdDashboard, MdList, MdSettings, MdAddBox } from "react-icons/md"
+import { Link } from "react-router-dom"
 
 export default function Sidebar() {
     return (
@@ -45,7 +38,9 @@ export default function Sidebar() {
                                 as={Button}
                                 variantColor="dark"
                             >
-                                {isOpen ? "Jhon Doe" : "Jhon Doe"}
+                                {isOpen
+                                    ? "Welcome Jhon Doe"
+                                    : "Welcome Jhon Doe"}
                             </MenuButton>
                             <MenuList>
                                 <MenuItem>Profile</MenuItem>
@@ -57,56 +52,77 @@ export default function Sidebar() {
                     )}
                 </Menu>
             </Flex>
-            <Flex flex="3" flexDirection="column">
-                <Flex
-                    w="100%"
-                    p={4}
-                    color="white"
-                    flexDirection="row"
-                    cursor="pointer"
-                >
-                    <Icon as={MdDashboard} mr="5" />
-                    <Text>Dashboard</Text>
+            <Flex flex="3" flexDirection="column" align="center">
+                <Flex w="100%" flexDirection="row" cursor="pointer">
+                    <Link to="/">
+                        <Button
+                            color="gray.200"
+                            leftIcon={MdDashboard}
+                            variantColor="#56657F"
+                        >
+                            Dashboard
+                        </Button>
+                    </Link>
                 </Flex>
-                <Flex
+                {/* <Flex
                     w="100%"
-                    p={4}
-                    color="white"
                     flexDirection="row"
                     cursor="pointer"
                 >
                     <Icon as={MdQuestionAnswer} mr="5" />
                     <Text>Preset Questions</Text>
+                </Flex> */}
+                <Flex w="100%" flexDirection="row" cursor="pointer">
+                    <Link to="/questions">
+                        <Button
+                            color="gray.200"
+                            leftIcon={MdList}
+                            variantColor="#56657F"
+                        >
+                            Question Lists
+                        </Button>
+                    </Link>
                 </Flex>
-                <Flex
-                    w="100%"
-                    p={4}
-                    color="white"
-                    flexDirection="row"
-                    cursor="pointer"
-                >
-                    <Icon as={MdList} mr="5" />
-                    <Text>Question List</Text>
+                <Flex w="100%" flexDirection="row" cursor="pointer">
+                    <Link to="/add-question">
+                        <Button
+                            color="gray.200"
+                            leftIcon={MdAddBox}
+                            variantColor="#56657F"
+                        >
+                            Add Question
+                        </Button>
+                    </Link>
                 </Flex>
-                <Flex
+                {/* <Flex
                     w="100%"
-                    p={4}
-                    color="white"
                     flexDirection="row"
                     cursor="pointer"
                 >
                     <Icon as={MdSchedule} mr="5" />
                     <Text>Upcoming Schedule</Text>
+                </Flex> */}
+                <Flex w="100%" flexDirection="row" cursor="pointer">
+                    <Link to="/rooms-list">
+                        <Button
+                            color="gray.200"
+                            leftIcon={MdSettings}
+                            variantColor="#56657F"
+                        >
+                            Rooms Management
+                        </Button>
+                    </Link>
                 </Flex>
-                <Flex
-                    w="100%"
-                    p={4}
-                    color="white"
-                    flexDirection="row"
-                    cursor="pointer"
-                >
-                    <Icon as={MdSettings} mr="5" />
-                    <Text>Schedule Management</Text>
+                <Flex w="100%" flexDirection="row" cursor="pointer">
+                    <Link to="/add-room">
+                        <Button
+                            color="gray.200"
+                            leftIcon={MdAddBox}
+                            variantColor="#56657F"
+                        >
+                            Add Room
+                        </Button>
+                    </Link>
                 </Flex>
             </Flex>
         </>

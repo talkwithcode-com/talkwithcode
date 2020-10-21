@@ -1,16 +1,15 @@
 import {
+    Box,
     Button,
     Flex,
     FormControl,
     Input,
     FormLabel,
-    Textarea,
-    Checkbox,
     Text,
-    FormHelperText,
     Heading,
     Select,
 } from "@chakra-ui/core"
+import { MdDelete } from "react-icons/md"
 import React, { useState } from "react"
 import { GoCheck } from "react-icons/go"
 import { useHistory } from "react-router-dom"
@@ -21,7 +20,7 @@ export default function FormRoom() {
         title: "",
         time_start: "",
         time_end: "",
-        ids: "",
+        ids: [],
     })
 
     const [questions, setQuestions] = useState([
@@ -34,7 +33,31 @@ export default function FormRoom() {
         },
         {
             _id: "title id 2",
-            title: "title 2",
+            title: "walaole",
+            description: "description 2",
+            score: 10,
+            timeLimit: 40,
+        },
+        {
+            _id: "title id 3",
+            title: "title 3",
+            description: "description 3",
+            score: 10,
+            timeLimit: 40,
+        },
+    ])
+
+    const [selections, setSelections] = useState([
+        {
+            _id: "title id 1",
+            title: "title 1",
+            description: "description 1",
+            score: 10,
+            timeLimit: 40,
+        },
+        {
+            _id: "title id 2",
+            title: "walaole",
             description: "description 2",
             score: 10,
             timeLimit: 40,
@@ -52,17 +75,47 @@ export default function FormRoom() {
 
     function handleOnChange(event) {
         let { name, value } = event.target
-        if (name === "score") {
-            value = Number(value)
-        } else if (name === "timeLimit") {
-            value = Number(value)
+        if (name === "ids") {
+            let arrInput = questions.filter(
+                (question) => question._id === value
+            )
+            let newForm = {
+                ...form,
+                [name]: form.ids.concat(arrInput),
+            }
+            setForm(newForm)
+            let newSelections = [...selections]
+            newSelections.splice(
+                newSelections.findIndex(
+                    (selection) => selection._id === arrInput[0]._id
+                ),
+                1
+            )
+            setSelections(newSelections)
+        } else {
+            let newForm = {
+                ...form,
+                [name]: value,
+            }
+            setForm(newForm)
         }
+    }
+
+    function handleOnClick(input) {
+        let newSetQuestion = form.ids
+        let newSelections = selections.concat(
+            newSetQuestion.find((item) => item.title === input)
+        )
+        newSetQuestion.splice(
+            newSetQuestion.findIndex((item) => item.title === input),
+            1
+        )
         let newForm = {
             ...form,
-            [name]: value,
+            ids: newSetQuestion,
         }
-        console.log(newForm)
         setForm(newForm)
+        setSelections(newSelections)
     }
 
     function handleOnSubmit(event) {
@@ -128,17 +181,37 @@ export default function FormRoom() {
                                 value={form.ids}
                                 onChange={handleOnChange}
                             >
-                                {questions.map((question) => {
+                                {selections.map((selection) => {
                                     return (
                                         <option
-                                            key={question._id}
-                                            value={question._id}
+                                            key={selection._id}
+                                            value={selection._id}
                                         >
-                                            {question.title}
+                                            {selection.title}
                                         </option>
                                     )
                                 })}
                             </Select>
+                        </FormControl>
+                        <FormControl margin={4} pb={4} w="100%">
+                            <FormLabel color="white">
+                                Selected Question
+                            </FormLabel>
+                            <Box bg="white" minH="4vh" w="100%">
+                                {form.ids.map((id) => {
+                                    return (
+                                        <Button
+                                            key={id._id}
+                                            rightIcon={MdDelete}
+                                            onClick={(event) =>
+                                                handleOnClick(id.title)
+                                            }
+                                        >
+                                            {id.title}
+                                        </Button>
+                                    )
+                                })}
+                            </Box>
                         </FormControl>
                         <Button
                             margin={4}
