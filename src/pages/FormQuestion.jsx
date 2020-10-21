@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client"
 import {
     Button,
     Flex,
@@ -9,28 +10,31 @@ import {
     Text,
     FormHelperText,
     Heading,
+    useToast,
 } from "@chakra-ui/core"
 import React, { useState } from "react"
 import { GoCheck } from "react-icons/go"
 import { useHistory } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
+import { POST_QUESTION } from "../graphql/index"
+import jwtdecode from "jwt-decode"
 
 export default function FormQuestion() {
     const [form, setForm] = useState({
         title: "",
-        timeLimit: 0,
-        score: 0,
+        timeLimit: "",
+        score: "",
         description: "",
     })
 
+    const [addQuestion] = useMutation(POST_QUESTION)
     const history = useHistory()
+    const toast = useToast()
 
     function handleOnChange(event) {
         let { name, value } = event.target
-        if (name === "score") {
-            value = Number(value)
-        } else if (name === "timeLimit") {
-            value = Number(value)
+        if (name === "timeLimit") {
+            value = parseFloat(value)
         }
         let newForm = {
             ...form,
@@ -42,8 +46,29 @@ export default function FormQuestion() {
 
     function handleOnSubmit(event) {
         event.preventDefault()
-        console.log("here")
-        history.push("/questions")
+        const dataUser = jwtdecode(localStorage.getItem("access_token"))
+        console.log(dataUser, localStorage.getItem("access_token"))
+        const input = {
+            timeLimit: form.timeLimit,
+            title: form.title,
+            score: form.score,
+            description: form.description,
+            user_id: dataUser._id,
+            access_token: localStorage.getItem("access_token"),
+        }
+        addQuestion({
+            variables: input,
+        })
+            .then((_) => {
+                toast({
+                    title: "Successfully insert a question",
+                    status: "success",
+                    duration: 2000,
+                    isClosable: true,
+                })
+                history.push("/questions")
+            })
+            .catch(console.log)
     }
 
     return (
@@ -77,7 +102,7 @@ export default function FormQuestion() {
                                 name="score"
                                 value={form.score}
                                 onChange={handleOnChange}
-                                type="number"
+                                type="text"
                                 placeholder="Put your score here"
                             />
                             <FormHelperText>
@@ -93,7 +118,7 @@ export default function FormQuestion() {
                                 name="timeLimit"
                                 value={form.timeLimit}
                                 onChange={handleOnChange}
-                                type="number"
+                                type="text"
                                 placeholder="Put your time limit here"
                             />
                             <FormHelperText>
