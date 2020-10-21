@@ -43,7 +43,7 @@ export default function TableBody(props) {
     function sampleOnClick(event) {
         event.preventDefault()
         console.log(props.question._id)
-        history.push("/add-solution/" + props.question._id)
+        history.push("/add-sample/" + props.question._id)
     }
     return (
         <Flex

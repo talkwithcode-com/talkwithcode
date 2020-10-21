@@ -106,6 +106,27 @@ export const POST_SOLUTION = gql`
     }
 `
 
+
+export const POST_SAMPLE_SOLUTION = gql`
+    mutation AddSampleSolution(
+        $input: String
+        $output: String
+        $access_token: String
+        $question_id: String
+    ) {
+        addSampleSolution(
+            input: $input
+            output: $output
+            access_token: $access_token
+            question_id: $question_id
+        ) {
+            _id
+            input
+            output
+        }
+}`
+
+
 // export const POST_SAMPLE_SOLUTION = gql`
 //     mutation AddSampleSolution(
 //         $input: input
