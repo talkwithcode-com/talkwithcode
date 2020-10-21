@@ -106,6 +106,7 @@ export const POST_SOLUTION = gql`
     }
 `
 
+
 export const POST_SAMPLE_SOLUTION = gql`
     mutation AddSampleSolution(
         $input: String
@@ -123,5 +124,51 @@ export const POST_SAMPLE_SOLUTION = gql`
             input
             output
         }
+}`
+
+// export const POST_SAMPLE_SOLUTION = gql`
+//     mutation AddSampleSolution(
+//         $input: input
+//         $output: output
+//         $access_token: access_token
+//         $question_id: question_id
+//     ) {
+//         addSampleSolution(
+//             input: $input
+//             output: $output
+//             access_token: $access_token
+//             question_id: $question_id
+//         ) {
+//             _id
+//             input
+//             output
+//         }
+//     }
+// `
+
+export const DELETE_QUESTION = gql`
+    mutation DeleteQuestion($question_id: ID, $access_token: String) {
+        deleteQuestion(question_id: $question_id, access_token: $access_token)
+    }
+`
+
+export const UPDATE_QUESTION = gql`
+    mutation UpdateQuestion(
+        $question_id: ID
+        $timeLimit: Float
+        $title: String
+        $score: String
+        $description: String
+        $user_id: String
+        $access_token: String
+    ) {
+        updateQuestion(
+            question_id: $question_id
+            timeLimit: $timeLimit
+            title: $title
+            score: $score
+            description: $description
+            access_token: $acces_token
+          )
     }
 `
