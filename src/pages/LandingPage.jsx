@@ -83,6 +83,8 @@ export default function LandingPage() {
                     duration: 2000,
                     isClosable: true,
                 })
+                setShowLogin(true)
+                setShowRegister(false)
             })
             .catch((err) => {
                 console.log(err)

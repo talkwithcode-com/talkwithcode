@@ -13,6 +13,7 @@ import {
     Questions,
     Rooms,
     LandingPage,
+    FormUpdateQuestion
 } from "./pages"
 import JoinRoom from "./pages/JoinRoom"
 import DocumentProvider from "./providers/DocumentProvider"
@@ -36,6 +37,9 @@ export default function App() {
                     </Route>
                     <Route path="/add-question">
                         <FormQuestion />
+                    </Route>
+                    <Route path="/questions/:question_id">
+                        <FormUpdateQuestion />
                     </Route>
                     <Route path="/add-room">
                         <FormRoom />
