@@ -14,6 +14,7 @@ import {
     Rooms,
     LandingPage,
 } from "./pages"
+import JoinRoom from "./pages/JoinRoom"
 import DocumentProvider from "./providers/DocumentProvider"
 import LanguageProvider from "./providers/LanguageProvider"
 import client from "./graphql/config"
@@ -56,6 +57,9 @@ export default function App() {
                     </Route>
                     <Route path="/rooms-list">
                         <Rooms />
+                    </Route>
+                    <Route path="/join-room">
+                        <JoinRoom />
                     </Route>
                     <Route exact path="/room">
                         <LanguageProvider>
