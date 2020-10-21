@@ -1,9 +1,12 @@
 import React, { useState } from "react"
+import { useMutation } from "@apollo/client"
 import { Box, Button, Flex, IconButton, Spinner } from "@chakra-ui/core"
 
-import * as codex from "../service/codex"
+import { RUN_CODE } from "../graphql/codeSanbox"
+import { getToken } from "../helpers/auth"
 
 function ResultCard({ data }) {
+    const [runCode] = useMutation(RUN_CODE)
     const [loading, setLoading] = useState(false)
     const [outputs, setOutputs] = useState([])
     const [show, setShow] = useState(false)
@@ -11,14 +14,32 @@ function ResultCard({ data }) {
     const handleRun = () => {
         setLoading(true)
         setShow(true)
-        codex
-            .runCode(data.code, data.lang)
-            .then((e) => e.data)
-            .then((data) => {
-                setLoading(false)
-                setOutputs(data.outputs)
+
+        runCode({
+            variables: {
+                access_token: getToken(),
+                data: {
+                    question_id: data.question_id,
+                    source_code: data.code,
+                    lang: data.lang,
+                },
+            },
+        })
+            .then(
+                ({
+                    data: {
+                        runCode: { logs },
+                    },
+                }) => {
+                    setOutputs(logs)
+                }
+            )
+            .catch((err) => {
+                console.log(err)
             })
-            .catch(console.log)
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     let height = { h: "50px" }
@@ -74,16 +95,21 @@ function ResultCard({ data }) {
             </Flex>
 
             {outputs?.length > 0 && !loading && show && (
-                <Flex flex="1">
+                <Flex flex="1" flexWrap="wrap" padding="2">
                     {outputs.map((e, i) => {
+                        const success = e.status === "success"
+
                         return (
-                            <Box
-                                style={{ whiteSpace: "pre-line" }}
+                            <Button
                                 key={i}
+                                size="sm"
+                                leftIcon={success ? "check" : "close"}
+                                variantColor={success ? "green" : "red"}
                                 fontSize="sm"
+                                mr="2"
                             >
-                                {e.stdout}
-                            </Box>
+                                Test Case #{i + 1}
+                            </Button>
                         )
                     })}
                 </Flex>

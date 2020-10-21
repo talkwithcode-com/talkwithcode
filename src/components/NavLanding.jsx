@@ -1,5 +1,7 @@
 import React from 'react'
-import { Flex, Text, Button } from '@chakra-ui/core'
+import { Flex, Text, Button,Box } from '@chakra-ui/core'
+import { VscDebugAlt2 } from "react-icons/vsc"
+
 
 export default function LandingPage(props) {
    
@@ -9,6 +11,13 @@ export default function LandingPage(props) {
             <Flex as="nav" align="center"
                 mx="20" my="3" justify="space-between">
                 <Flex>
+                <Box
+                    as={VscDebugAlt2}
+                    size="28px"
+                    ml="5"
+                    mr="2"
+                    color="green.400"
+                />
                     <Text fontWeight="bold">TalkWithCode</Text>
                 </Flex>
                 <Flex>

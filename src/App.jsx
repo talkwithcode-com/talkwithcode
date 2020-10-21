@@ -1,6 +1,5 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-
 import {
     DummyPage,
     RoomPage,
@@ -18,53 +17,57 @@ import {
 import JoinRoom from "./pages/JoinRoom"
 import DocumentProvider from "./providers/DocumentProvider"
 import LanguageProvider from "./providers/LanguageProvider"
+import client from "./graphql/config"
+import { ApolloProvider } from "@apollo/client"
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <Switch>
-                <Route exact path="/landing">
-                    <LandingPage />
-                </Route>
-                <Route exact path="/">
-                    <Dashboard />
-                </Route>
-                <Route path="/code">
-                    <DummyPage />
-                </Route>
-                <Route path="/add-question">
-                    <FormQuestion />
-                </Route>
-                <Route path="/add-room">
-                    <FormRoom />
-                </Route>
-                <Route path="/add-solution/:question_id">
-                    <FormSolution />
-                </Route>
-                <Route path="/add-sample/:question_id">
-                    <FormSampleSolution />
-                </Route>
-                <Route path="/register">
-                    <FormRegister />
-                </Route>
-                <Route path="/login">
-                    <FormLogin />
-                </Route>
-                <Route path="/questions">
-                    <Questions />
-                </Route>
-                <Route path="/rooms-list">
-                    <Rooms />
-                </Route>
-                <Route path="/join-room">
-                    <JoinRoom />
-                </Route>
-                <Route exact path="/room">
-                    <LanguageProvider>
-                        <RoomPage />
-                    </LanguageProvider>
-                </Route>
-            </Switch>
-        </BrowserRouter>
+        <ApolloProvider client={client}>
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/landing">
+                        <LandingPage />
+                    </Route>
+                    <Route exact path="/">
+                        <Dashboard />
+                    </Route>
+                    <Route path="/code">
+                        <DummyPage />
+                    </Route>
+                    <Route path="/add-question">
+                        <FormQuestion />
+                    </Route>
+                    <Route path="/add-room">
+                        <FormRoom />
+                    </Route>
+                    <Route path="/add-solution/:question_id">
+                        <FormSolution />
+                    </Route>
+                    <Route path="/add-sample/:question_id">
+                        <FormSampleSolution />
+                    </Route>
+                    <Route path="/register">
+                        <FormRegister />
+                    </Route>
+                    <Route path="/login">
+                        <FormLogin />
+                    </Route>
+                    <Route path="/questions">
+                        <Questions />
+                    </Route>
+                    <Route path="/rooms-list">
+                        <Rooms />
+                    </Route>
+                    <Route path="/join-room">
+                        <JoinRoom />
+                    </Route>
+                    <Route exact path="/room">
+                        <LanguageProvider>
+                            <RoomPage />
+                        </LanguageProvider>
+                    </Route>
+                </Switch>
+            </BrowserRouter>
+        </ApolloProvider>
     )
 }
