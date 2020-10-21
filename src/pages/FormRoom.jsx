@@ -16,6 +16,12 @@ import { useHistory } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 
 export default function FormRoom() {
+    // const { data, loading, error, refetch } = useQuery(GET_QUESTIONS, {
+    //     variables: {
+    //         access_token: localStorage.getItem("access_token"),
+    //     },
+    // })
+
     const [form, setForm] = useState({
         title: "",
         time_start: "",

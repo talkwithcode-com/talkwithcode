@@ -108,7 +108,7 @@ export default function LandingPage() {
                     isClosable: true,
                 })
                 localStorage.setItem("access_token", input.access_token)
-                history.push("/")
+                history.push("/questions")
             })
             .catch(console.log)
     }
@@ -127,9 +127,11 @@ export default function LandingPage() {
                 }}
             >
                 <Box w="100%">
-                    <Text fontSize="5xl" textAlign="center" fontWeight="bold">
-                        BLAA
-                    </Text>
+                    <Text
+                        fontSize="5xl"
+                        textAlign="center"
+                        fontWeight="bold"
+                    ></Text>
                 </Box>
 
                 <Flex>

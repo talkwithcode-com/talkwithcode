@@ -12,11 +12,10 @@ export const POST_LOGIN = gql`
     }
 `
 
-
 export const GET_QUESTIONS = gql`
     query Questions($access_token: String) {
         questions(access_token: $access_token) {
-            id
+            _id
             title
             score
             description
@@ -87,25 +86,25 @@ export const POST_QUESTION = gql`
     }
 `
 
-// export const POST_SOLUTION = gql`
-//     mutation AddSolution(
-//         $input: input
-//         $output: output
-//         $access_token: access_token
-//         $question_id: question_id
-//     ) {
-//         addSolution(
-//             input: $input
-//             output: $output
-//             access_token: $access_token
-//             question_id: $question_id
-//         ) {
-//             _id
-//             input
-//             output
-//         }
-//     }
-// `
+export const POST_SOLUTION = gql`
+    mutation AddSolution(
+        $input: String
+        $output: String
+        $access_token: String
+        $question_id: String
+    ) {
+        addSolution(
+            input: $input
+            output: $output
+            access_token: $access_token
+            question_id: $question_id
+        ) {
+            _id
+            input
+            output
+        }
+    }
+`
 
 // export const POST_SAMPLE_SOLUTION = gql`
 //     mutation AddSampleSolution(

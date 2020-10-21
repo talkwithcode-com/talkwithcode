@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client"
 import {
     Button,
     Flex,
@@ -15,12 +16,14 @@ import React, { useState } from "react"
 import { GoCheck } from "react-icons/go"
 import { useHistory, useParams } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
+import { POST_SOLUTION } from "../graphql"
 
 export default function FormSolution() {
     const [form, setForm] = useState({
         input: "",
         output: "",
     })
+    const [addSolution] = useMutation(POST_SOLUTION)
 
     const { question_id } = useParams()
 
@@ -43,8 +46,18 @@ export default function FormSolution() {
 
     function handleOnSubmit(event) {
         event.preventDefault()
-        console.log("here")
-        history.push("/questions")
+        addSolution({
+            variables: {
+                input: form.input,
+                output: form.output,
+                question_id: question_id,
+                access_token: localStorage.getItem("access_token"),
+            },
+        })
+            .then((_) => {
+                history.push("/questions")
+            })
+            .catch(console.log)
     }
 
     return (
