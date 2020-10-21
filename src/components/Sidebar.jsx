@@ -114,6 +114,17 @@ export default function Sidebar() {
                     </Link>
                 </Flex>
                 <Flex w="100%" flexDirection="row" cursor="pointer">
+                    <Link to="/room">
+                        <Button
+                            color="gray.200"
+                            leftIcon={MdSettings}
+                            variantColor="#56657F"
+                        >
+                            Room For Test
+                        </Button>
+                    </Link>
+                </Flex>
+                <Flex w="100%" flexDirection="row" cursor="pointer">
                     <Link to="/add-room">
                         <Button
                             color="gray.200"

@@ -6,7 +6,6 @@ import {
     Input,
     FormLabel,
     Textarea,
-    Checkbox,
     Text,
     FormHelperText,
     Heading,
@@ -14,12 +13,13 @@ import {
 } from "@chakra-ui/core"
 import React, { useState } from "react"
 import { GoCheck } from "react-icons/go"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import { POST_QUESTION } from "../graphql/index"
 import jwtdecode from "jwt-decode"
 
 export default function FormQuestion() {
+    const {question_id} = useParams()
     const [form, setForm] = useState({
         title: "",
         timeLimit: "",
@@ -49,6 +49,7 @@ export default function FormQuestion() {
         const dataUser = jwtdecode(localStorage.getItem("access_token"))
         console.log(dataUser, localStorage.getItem("access_token"))
         const input = {
+            question_id ,
             timeLimit: form.timeLimit,
             title: form.title,
             score: form.score,
@@ -84,7 +85,7 @@ export default function FormQuestion() {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <Heading color="white">Add Your Question Here!</Heading>
+                    <Heading color="white">Edit Your Question Here!</Heading>
                     <form onSubmit={(event) => handleOnSubmit(event)}>
                         <FormControl margin={4} pb={4} w="100%">
                             <FormLabel color="white">Question Title</FormLabel>

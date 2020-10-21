@@ -1,18 +1,37 @@
 import React from "react"
-import { Box, Button, List, ListItem, Flex, Text } from "@chakra-ui/core"
+import { Box, Button, List, ListItem, Flex, Text, useToast } from "@chakra-ui/core"
+import { useMutation } from "@apollo/client"
+import { DELETE_QUESTION } from "../graphql/index"
 import { useHistory } from "react-router-dom"
 
 export default function TableBody(props) {
+    
     const history = useHistory()
+    const [deleteQuestion] = useMutation(DELETE_QUESTION)
+    const toast = useToast()
 
-    function updateOnClick(event) {
-        event.preventDefault()
-        console.log("update")
+    function updateOnClick(question_id) {
+        // event.preventDefault()
+        console.log(question_id)
+        history.push(`/questions/${question_id}`)
     }
 
-    function deleteOnClick(event) {
-        event.preventDefault()
-        console.log("delete")
+    function deleteOnClick(param) {
+        // event.preventDefault()
+        deleteQuestion({
+            variables :{
+                question_id: param,
+                access_token: localStorage.getItem('access_token')
+            }
+        })
+        .then(({data}) => {
+            toast({
+                title: data.deleteQuestion,
+                status: "success",
+                duration: 2000,
+                isClosable: true,
+            })
+        })
     }
 
     function solutionOnClick(event) {
@@ -24,7 +43,7 @@ export default function TableBody(props) {
     function sampleOnClick(event) {
         event.preventDefault()
         console.log(props.question._id)
-        history.push("/add-solution/" + props.question._id)
+        history.push("/add-sample/" + props.question._id)
     }
     return (
         <Flex
@@ -101,7 +120,7 @@ export default function TableBody(props) {
                                     variantColor="yellow"
                                     m="2"
                                     width="80%"
-                                    onClick={updateOnClick}
+                                    onClick={() => updateOnClick(props.question._id)}
                                 >
                                     Update
                                 </Button>
@@ -112,7 +131,7 @@ export default function TableBody(props) {
                                     variantColor="red"
                                     m="2"
                                     width="80%"
-                                    onClick={deleteOnClick}
+                                    onClick={() => deleteOnClick(props.question._id)}
                                 >
                                     Delete
                                 </Button>

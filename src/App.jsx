@@ -13,8 +13,10 @@ import {
     Questions,
     Rooms,
     LandingPage,
+    FormUpdateQuestion
 } from "./pages"
 
+import JoinRoom from "./pages/JoinRoom"
 import LanguageProvider from "./providers/LanguageProvider"
 import client from "./graphql/config"
 import { ApolloProvider } from "@apollo/client"
@@ -36,6 +38,9 @@ export default function App() {
                     </Route>
                     <Route path="/add-question">
                         <FormQuestion />
+                    </Route>
+                    <Route path="/questions/:question_id">
+                        <FormUpdateQuestion />
                     </Route>
                     <Route path="/add-room">
                         <FormRoom />
@@ -62,6 +67,9 @@ export default function App() {
                         <LanguageProvider>
                             <CodeSandbox />
                         </LanguageProvider>
+                    </Route>
+                    <Route path="/join-room">
+                        <JoinRoom />
                     </Route>
                     <Route exact path="/room">
                         <LanguageProvider>
