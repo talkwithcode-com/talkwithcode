@@ -28,7 +28,11 @@ export default function PageRoom() {
             >
                 <Editor value="" updateValue={setCode} />
                 <ResultCard
-                    data={{ code, lang, question_id: questions[active] }}
+                    data={{
+                        code,
+                        lang,
+                        question_id: "5f8fe7703324b65711dac5da",
+                    }}
                 />
             </Flex>
             <Stack flex="1" spacing={8}>
