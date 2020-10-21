@@ -11,8 +11,10 @@ import FormRoom from "./FormRoom"
 import FormSampleSolution from "./FormSampleSolution"
 import FormSolution from "./FormSolution"
 import LandingPage from './LandingPage'
+import FormUpdateQuestion from './FormUpdateQuestion'
 
 export {
+    FormUpdateQuestion,
     HomePage,
     DummyPage,
     Dashboard,

@@ -32,6 +32,7 @@ export default function Questions() {
     //         timeLimit: 40,
     //     },
     // ])
+    console.log(data)
 
     return (
         <>
