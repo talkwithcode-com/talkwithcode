@@ -6,11 +6,13 @@ import { useQuery } from "@apollo/client"
 import { GET_QUESTIONS } from "../graphql/index"
 
 export default function Questions() {
+
     const { data, loading, error, refetch } = useQuery(GET_QUESTIONS, {
         variables: {
             access_token: localStorage.getItem("access_token"),
         },
     })
+
 
     return (
         <>
