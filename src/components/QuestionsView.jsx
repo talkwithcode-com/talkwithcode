@@ -14,9 +14,9 @@ import parser from "../lib/exampleUnified"
 function QuestionView({ questions, onChange }) {
     return (
         <Accordion p="2" flex="1" onChange={onChange}>
-            {questions.map((q) => {
+            {questions.map((q, index) => {
                 return (
-                    <AccordionItem py="4" key={q.id}>
+                    <AccordionItem py="4" key={index}>
                         <AccordionHeader>
                             <Box flex="1" textAlign="left">
                                 <Heading fontSize="lg">{q.title}</Heading>

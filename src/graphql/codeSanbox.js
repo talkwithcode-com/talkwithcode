@@ -10,3 +10,21 @@ export const RUN_CODE = gql`
         }
     }
 `
+
+export const GET_QUESTION = gql`
+    query GetQuestion($access_token: String) {
+        questions(access_token: $access_token) {
+            id
+            title
+            description
+            sample_solution {
+                input
+                output
+            }
+            solution {
+                input
+                output
+            }
+        }
+    }
+`
