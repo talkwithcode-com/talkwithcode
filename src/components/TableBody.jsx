@@ -1,11 +1,18 @@
-import React from "react"
-import { Box, Button, List, ListItem, Flex, Text, useToast } from "@chakra-ui/core"
 import { useMutation } from "@apollo/client"
-import { DELETE_QUESTION } from "../graphql/index"
+import {
+    Box,
+    Button,
+    Flex,
+    List,
+    ListItem,
+    Text,
+    useToast,
+} from "@chakra-ui/core"
+import React from "react"
 import { useHistory } from "react-router-dom"
+import { DELETE_QUESTION } from "../graphql/index"
 
 export default function TableBody(props) {
-    
     const history = useHistory()
     const [deleteQuestion] = useMutation(DELETE_QUESTION)
     const toast = useToast()
@@ -19,12 +26,11 @@ export default function TableBody(props) {
     function deleteOnClick(param) {
         // event.preventDefault()
         deleteQuestion({
-            variables :{
+            variables: {
                 question_id: param,
-                access_token: localStorage.getItem('access_token')
-            }
-        })
-        .then(({data}) => {
+                access_token: localStorage.getItem("access_token"),
+            },
+        }).then(({ data }) => {
             toast({
                 title: data.deleteQuestion,
                 status: "success",
@@ -120,7 +126,9 @@ export default function TableBody(props) {
                                     variantColor="yellow"
                                     m="2"
                                     width="80%"
-                                    onClick={() => updateOnClick(props.question._id)}
+                                    onClick={() =>
+                                        updateOnClick(props.question._id)
+                                    }
                                 >
                                     Update
                                 </Button>
@@ -131,7 +139,9 @@ export default function TableBody(props) {
                                     variantColor="red"
                                     m="2"
                                     width="80%"
-                                    onClick={() => deleteOnClick(props.question._id)}
+                                    onClick={() =>
+                                        deleteOnClick(props.question._id)
+                                    }
                                 >
                                     Delete
                                 </Button>
@@ -141,7 +151,7 @@ export default function TableBody(props) {
                 </>
             )}
             {props.room && (
-                <>
+                <React.Fragment>
                     <Flex flex="4" direction="column">
                         <Box
                             color="gray.200"
@@ -186,7 +196,7 @@ export default function TableBody(props) {
                             Delete
                         </Button>
                     </Flex>
-                </>
+                </React.Fragment>
             )}
         </Flex>
     )

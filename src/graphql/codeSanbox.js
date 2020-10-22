@@ -16,6 +16,8 @@ export const GET_QUESTION = gql`
         questions(access_token: $access_token) {
             _id
             title
+            description
+            title
         }
     }
 `

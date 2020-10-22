@@ -13,7 +13,7 @@ import { Link } from "react-router-dom"
 
 export default function Sidebar() {
     return (
-        <>
+        <React.Fragment>
             <Flex
                 flex="1"
                 justify="center"
@@ -64,14 +64,6 @@ export default function Sidebar() {
                         </Button>
                     </Link>
                 </Flex>
-                {/* <Flex
-                    w="100%"
-                    flexDirection="row"
-                    cursor="pointer"
-                >
-                    <Icon as={MdQuestionAnswer} mr="5" />
-                    <Text>Preset Questions</Text>
-                </Flex> */}
                 <Flex w="100%" flexDirection="row" cursor="pointer">
                     <Link to="/questions">
                         <Button
@@ -136,6 +128,6 @@ export default function Sidebar() {
                     </Link>
                 </Flex>
             </Flex>
-        </>
+        </React.Fragment>
     )
 }

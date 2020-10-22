@@ -160,11 +160,11 @@ const CodeSandbox = () => {
                     <React.Fragment>
                         <QuestionDrawer isOpen={isOpen} onClose={onClose} />
                         <Flex justify="space-between" mb="6">
-                            <Heading>{data.question.title}</Heading>
+                            <Heading>{data?.question?.title}</Heading>
                             <IconButton icon="chevron-left" onClick={onOpen} />
                         </Flex>
                         <MdView
-                            __html={parser(data.question.description).__html}
+                            __html={parser(data?.question?.description).__html}
                         />
                     </React.Fragment>
                 )}

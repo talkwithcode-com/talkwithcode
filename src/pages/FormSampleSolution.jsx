@@ -3,14 +3,10 @@ import {
     Button,
     Flex,
     FormControl,
-    Input,
     FormLabel,
-    Textarea,
-    Checkbox,
-    Text,
-    FormHelperText,
     Heading,
-    Select,
+    Text,
+    Textarea,
 } from "@chakra-ui/core"
 import React, { useState } from "react"
 import { GoCheck } from "react-icons/go"
