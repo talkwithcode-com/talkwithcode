@@ -106,7 +106,6 @@ export const POST_SOLUTION = gql`
     }
 `
 
-
 export const POST_SAMPLE_SOLUTION = gql`
     mutation AddSampleSolution(
         $input: String
@@ -124,8 +123,8 @@ export const POST_SAMPLE_SOLUTION = gql`
             input
             output
         }
-}`
-
+    }
+`
 
 // export const POST_SAMPLE_SOLUTION = gql`
 //     mutation AddSampleSolution(
@@ -170,6 +169,21 @@ export const UPDATE_QUESTION = gql`
             score: $score
             description: $description
             access_token: $acces_token
-          )
+        )
+    }
+`
+export const POST_ROOM = gql`
+    mutation AddChannel(
+        $time_start: String!
+        $time_end: String!
+        $user_id: String!
+        $ids: String!
+    ) {
+        addChannelToken(
+            time_start: $time_start
+            time_end: $time_end
+            user_id: $user_id
+            ids: $ids
+        )
     }
 `

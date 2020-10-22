@@ -8,19 +8,35 @@ import {
     Text,
     Heading,
     Select,
+    useDisclosure,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
 } from "@chakra-ui/core"
 import { MdDelete } from "react-icons/md"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { GoCheck } from "react-icons/go"
 import { useHistory } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
+import { useMutation, useQuery } from "@apollo/client"
+import jwtdecode from "jwt-decode"
+import { GET_QUESTIONS, POST_ROOM } from "../graphql/index"
 
 export default function FormRoom() {
-    // const { data, loading, error, refetch } = useQuery(GET_QUESTIONS, {
-    //     variables: {
-    //         access_token: localStorage.getItem("access_token"),
-    //     },
-    // })
+    const { data, loading, error, refetch } = useQuery(GET_QUESTIONS, {
+        variables: {
+            access_token: localStorage.getItem("access_token"),
+        },
+    })
+
+    const [respond, setRespond] = useState("")
+
+    const [addChannelToken] = useMutation(POST_ROOM)
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const [form, setForm] = useState({
         title: "",
@@ -29,60 +45,14 @@ export default function FormRoom() {
         ids: [],
     })
 
-    const [questions, setQuestions] = useState([
-        {
-            _id: "title id 1",
-            title: "title 1",
-            description: "description 1",
-            score: 10,
-            timeLimit: 40,
-        },
-        {
-            _id: "title id 2",
-            title: "walaole",
-            description: "description 2",
-            score: 10,
-            timeLimit: 40,
-        },
-        {
-            _id: "title id 3",
-            title: "title 3",
-            description: "description 3",
-            score: 10,
-            timeLimit: 40,
-        },
-    ])
-
-    const [selections, setSelections] = useState([
-        {
-            _id: "title id 1",
-            title: "title 1",
-            description: "description 1",
-            score: 10,
-            timeLimit: 40,
-        },
-        {
-            _id: "title id 2",
-            title: "walaole",
-            description: "description 2",
-            score: 10,
-            timeLimit: 40,
-        },
-        {
-            _id: "title id 3",
-            title: "title 3",
-            description: "description 3",
-            score: 10,
-            timeLimit: 40,
-        },
-    ])
+    const [questions, setQuestions] = useState([])
 
     const history = useHistory()
 
     function handleOnChange(event) {
         let { name, value } = event.target
         if (name === "ids") {
-            let arrInput = questions.filter(
+            let arrInput = questions.questions.filter(
                 (question) => question._id === value
             )
             let newForm = {
@@ -90,14 +60,10 @@ export default function FormRoom() {
                 [name]: form.ids.concat(arrInput),
             }
             setForm(newForm)
-            let newSelections = [...selections]
-            newSelections.splice(
-                newSelections.findIndex(
-                    (selection) => selection._id === arrInput[0]._id
-                ),
-                1
+            const newQuestions = questions.questions.filter(
+                (question) => question._id !== value
             )
-            setSelections(newSelections)
+            setQuestions({ questions: newQuestions })
         } else {
             let newForm = {
                 ...form,
@@ -109,7 +75,7 @@ export default function FormRoom() {
 
     function handleOnClick(input) {
         let newSetQuestion = form.ids
-        let newSelections = selections.concat(
+        let newQuestion = questions.questions.concat(
             newSetQuestion.find((item) => item.title === input)
         )
         newSetQuestion.splice(
@@ -121,17 +87,74 @@ export default function FormRoom() {
             ids: newSetQuestion,
         }
         setForm(newForm)
-        setSelections(newSelections)
+        setQuestions({ questions: newQuestion })
     }
 
     function handleOnSubmit(event) {
         event.preventDefault()
-        console.log("here")
-        history.push("/rooms-list")
+        const dataUser = jwtdecode(localStorage.getItem("access_token"))
+        console.log(dataUser)
+        const dataIds = form.ids.map((id) => {
+            return id._id
+        })
+        const input = {
+            time_start: form.time_start.toString(),
+            time_end: form.time_end.toString(),
+            user_id: dataUser._id,
+            ids: dataIds.join(),
+        }
+        console.log(input)
+        addChannelToken({
+            variables: input,
+        })
+            .then(({ data }) => {
+                console.log(data)
+                setRespond(data.addChannelToken)
+                onOpen()
+                // history.push("/questions")
+            })
+            .catch(console.log)
     }
 
+    useEffect(() => {
+        setQuestions(data)
+    }, [loading, data])
     return (
         <>
+            <Modal
+                isOpen={isOpen}
+                onClose={() => {
+                    onClose()
+                    history.push("/questions")
+                }}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Channel Token</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text>
+                            Below are your channel token. Please copy it,
+                            because it will required for entering the room
+                        </Text>
+                        <Text>{respond}</Text>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button
+                            variantColor="blue"
+                            mr={3}
+                            onClick={() => {
+                                onClose()
+                                history.push("/questions")
+                            }}
+                        >
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
             <Flex flex="1" w="100%" h="100vh">
                 <Flex flex="1" bg="#56657F" direction="column" padding="2">
                     <Sidebar />
@@ -187,13 +210,13 @@ export default function FormRoom() {
                                 value={form.ids}
                                 onChange={handleOnChange}
                             >
-                                {selections.map((selection) => {
+                                {questions?.questions?.map((question) => {
                                     return (
                                         <option
-                                            key={selection._id}
-                                            value={selection._id}
+                                            key={question._id}
+                                            value={question._id}
                                         >
-                                            {selection.title}
+                                            {question.title}
                                         </option>
                                     )
                                 })}

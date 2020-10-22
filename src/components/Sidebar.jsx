@@ -94,7 +94,7 @@ export default function Sidebar() {
                     <Icon as={MdSchedule} mr="5" />
                     <Text>Upcoming Schedule</Text>
                 </Flex> */}
-                <Flex w="100%" flexDirection="row" cursor="pointer">
+                {/* <Flex w="100%" flexDirection="row" cursor="pointer">
                     <Link to="/rooms-list">
                         <Button
                             color="gray.200"
@@ -104,18 +104,7 @@ export default function Sidebar() {
                             Rooms Management
                         </Button>
                     </Link>
-                </Flex>
-                <Flex w="100%" flexDirection="row" cursor="pointer">
-                    <Link to="/room">
-                        <Button
-                            color="gray.200"
-                            leftIcon={MdSettings}
-                            variantColor="#56657F"
-                        >
-                            Room For Test
-                        </Button>
-                    </Link>
-                </Flex>
+                </Flex> */}
                 <Flex w="100%" flexDirection="row" cursor="pointer">
                     <Link to="/add-room">
                         <Button

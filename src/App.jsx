@@ -13,7 +13,7 @@ import {
     Questions,
     Rooms,
     LandingPage,
-    FormUpdateQuestion
+    FormUpdateQuestion,
 } from "./pages"
 
 import JoinRoom from "./pages/JoinRoom"
