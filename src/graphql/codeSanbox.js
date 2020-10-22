@@ -51,3 +51,11 @@ export const LISTEN_SCREEN = gql`
         }
     }
 `
+
+export const VALIDATE_ROOM_CODE = gql`
+    mutation ValidateRoomCode($key: String!, $access_token: String!) {
+        validateChannelToken(key: $key, access_token: $access_token) {
+            questions
+        }
+    }
+`
