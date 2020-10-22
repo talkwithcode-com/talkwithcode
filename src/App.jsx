@@ -13,7 +13,7 @@ import {
     Questions,
     Rooms,
     LandingPage,
-    FormUpdateQuestion
+    FormUpdateQuestion,
 } from "./pages"
 
 import JoinRoom from "./pages/JoinRoom"
@@ -60,7 +60,7 @@ export default function App() {
                     <Route path="/questions">
                         <Questions />
                     </Route>
-                    <Route path="/rooms-list">
+                    <Route path="/rooms-list/:detail">
                         <Rooms />
                     </Route>
                     <Route path="/sandbox/:id">
