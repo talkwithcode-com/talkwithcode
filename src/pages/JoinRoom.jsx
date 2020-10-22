@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import { useMutation } from "@apollo/client"
+import { useHistory } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import {
     Button,
@@ -8,19 +10,34 @@ import {
     Textarea,
     Text,
     Heading,
-    Select,
 } from "@chakra-ui/core"
+import { getToken } from "../helpers/auth"
+import { VALIDATE_ROOM_CODE } from "../graphql/codeSanbox"
 
 export default function JoinRoom() {
     const [passcode, setPasscode] = useState("")
+    const history = useHistory()
 
     function passcodeChange(event) {
         setPasscode(event.target.value)
     }
 
+    const [validateCode] = useMutation(VALIDATE_ROOM_CODE)
+
     function onSubmitPasscode(event) {
         event.preventDefault()
-        console.log(passcode)
+        validateCode({
+            variables: {
+                key: passcode,
+                access_token: getToken(),
+            },
+        }).then(({ data: { validateChannelToken } }) => {
+            console.log(validateChannelToken.questions)
+            const res = JSON.parse(validateChannelToken.questions[0])
+            const id = res.questions[0]._id
+            history.replace("/sandbox/" + id)
+            localStorage.setItem("roomcode", passcode)
+        })
     }
 
     return (

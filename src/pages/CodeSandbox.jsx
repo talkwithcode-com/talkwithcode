@@ -22,10 +22,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Editor, MdView } from "../components"
 import {
-    GET_QUESTION,
     GET_QUESTION_BY_ID,
     RUN_CODE,
     SHARE_SCREEN,
+    VALIDATE_ROOM_CODE,
 } from "../graphql/codeSanbox"
 import { getToken } from "../helpers/auth"
 import parser from "../lib/exampleUnified"
@@ -198,11 +198,30 @@ const Placeholder = () => (
 )
 
 const QuestionDrawer = ({ onClose, isOpen }) => {
-    const { loading, data } = useQuery(GET_QUESTION, {
-        variables: {
-            access_token: getToken(),
-        },
-    })
+    const roomCode = localStorage.getItem("roomcode")
+    const [validateCode] = useMutation(VALIDATE_ROOM_CODE)
+    const [questions, setQuestions] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        validateCode({
+            variables: {
+                key: roomCode,
+                access_token: getToken(),
+            },
+        })
+            .then(({ data: { validateChannelToken } }) => {
+                const res = validateChannelToken.questions.map((item) => {
+                    const body = JSON.parse(item)
+                    return body.questions.pop()
+                })
+                setQuestions(res)
+            })
+            .catch(console.error)
+            .finally(() => {
+                setLoading(false)
+            })
+    }, [roomCode, validateCode])
 
     return (
         <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
@@ -216,7 +235,7 @@ const QuestionDrawer = ({ onClose, isOpen }) => {
                         <Placeholder />
                     ) : (
                         <List spacing={3}>
-                            {data?.questions.map((e, index) => {
+                            {questions.map((e, index) => {
                                 return (
                                     <ListItem
                                         key={index}
