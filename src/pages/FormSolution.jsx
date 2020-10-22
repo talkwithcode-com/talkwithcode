@@ -3,14 +3,10 @@ import {
     Button,
     Flex,
     FormControl,
-    Input,
     FormLabel,
-    Textarea,
-    Checkbox,
-    Text,
-    FormHelperText,
     Heading,
-    Select,
+    Text,
+    Textarea,
 } from "@chakra-ui/core"
 import React, { useState } from "react"
 import { GoCheck } from "react-icons/go"
@@ -19,16 +15,16 @@ import Sidebar from "../components/Sidebar"
 import { POST_SOLUTION } from "../graphql"
 
 export default function FormSolution() {
-    const [form, setForm] = useState({
-        input: "",
-        output: "",
-    })
     const [addSolution] = useMutation(POST_SOLUTION)
 
     const { question_id } = useParams()
 
     const history = useHistory()
 
+    const [form, setForm] = useState({
+        input: "",
+        output: "",
+    })
     function handleOnChange(event) {
         let { name, value } = event.target
         if (name === "score") {
