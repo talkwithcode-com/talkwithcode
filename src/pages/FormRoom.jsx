@@ -8,6 +8,14 @@ import {
     Text,
     Heading,
     Select,
+    useDisclosure,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
 } from "@chakra-ui/core"
 import { MdDelete } from "react-icons/md"
 import React, { useEffect, useState } from "react"
@@ -25,7 +33,10 @@ export default function FormRoom() {
         },
     })
 
+    const [respond, setRespond] = useState("")
+
     const [addChannelToken] = useMutation(POST_ROOM)
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const [form, setForm] = useState({
         title: "",
@@ -96,9 +107,11 @@ export default function FormRoom() {
         addChannelToken({
             variables: input,
         })
-            .then((data) => {
+            .then(({ data }) => {
                 console.log(data)
-                history.push("/rooms-list/", input)
+                setRespond(data.addChannelToken)
+                onOpen()
+                // history.push("/questions")
             })
             .catch(console.log)
     }
@@ -106,9 +119,42 @@ export default function FormRoom() {
     useEffect(() => {
         setQuestions(data)
     }, [loading, data])
-
     return (
         <>
+            <Modal
+                isOpen={isOpen}
+                onClose={() => {
+                    onClose()
+                    history.push("/questions")
+                }}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Channel Token</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text>
+                            Below are your channel token. Please copy it,
+                            because it will required for entering the room
+                        </Text>
+                        <Text>{respond}</Text>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button
+                            variantColor="blue"
+                            mr={3}
+                            onClick={() => {
+                                onClose()
+                                history.push("/questions")
+                            }}
+                        >
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
             <Flex flex="1" w="100%" h="100vh">
                 <Flex flex="1" bg="#56657F" direction="column" padding="2">
                     <Sidebar />

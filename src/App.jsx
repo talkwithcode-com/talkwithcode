@@ -60,7 +60,7 @@ export default function App() {
                     <Route path="/questions">
                         <Questions />
                     </Route>
-                    <Route path="/rooms-list/:detail">
+                    <Route path="/rooms-list">
                         <Rooms />
                     </Route>
                     <Route path="/sandbox/:id">
