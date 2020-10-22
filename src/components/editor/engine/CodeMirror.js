@@ -10,6 +10,10 @@ export default class CodeMirror {
         return this.core.getValue()
     }
 
+    setValue(value) {
+        this.core.setValue(value)
+    }
+
     updateTheme(theme) {
         this.core.setOption("theme", theme)
     }

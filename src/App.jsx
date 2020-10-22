@@ -21,6 +21,7 @@ import LanguageProvider from "./providers/LanguageProvider"
 import client from "./graphql/config"
 import { ApolloProvider } from "@apollo/client"
 import CodeSandbox from "./pages/CodeSandbox"
+import CodeSandboxLive from "./pages/CodeSandboxLive"
 
 export default function App() {
     return (
@@ -63,7 +64,12 @@ export default function App() {
                     <Route path="/rooms-list">
                         <Rooms />
                     </Route>
-                    <Route path="/sandbox/:id">
+                    <Route exact path="/sandbox/:id/live">
+                        <LanguageProvider>
+                            <CodeSandboxLive />
+                        </LanguageProvider>
+                    </Route>
+                    <Route exact path="/sandbox/:id">
                         <LanguageProvider>
                             <CodeSandbox />
                         </LanguageProvider>

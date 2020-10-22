@@ -25,6 +25,7 @@ import {
     GET_QUESTION,
     GET_QUESTION_BY_ID,
     RUN_CODE,
+    SHARE_SCREEN,
 } from "../graphql/codeSanbox"
 import { getToken } from "../helpers/auth"
 import parser from "../lib/exampleUnified"
@@ -47,6 +48,8 @@ const CodeSandbox = () => {
             id: id,
         },
     })
+
+    const [shareScreen] = useMutation(SHARE_SCREEN)
 
     useEffect(() => {
         refetch()
@@ -87,9 +90,19 @@ const CodeSandbox = () => {
                 mxaW="50%"
             >
                 <Editor
+                    hideFooter={false}
                     onRun={handleRunCode}
                     show={show}
                     toggleShow={() => setShow((p) => !p)}
+                    updateValue={(content) => {
+                        console.log(content)
+                        shareScreen({
+                            variables: {
+                                user: "Jose",
+                                content,
+                            },
+                        })
+                    }}
                 />
                 {logsLoading ? (
                     <Flex

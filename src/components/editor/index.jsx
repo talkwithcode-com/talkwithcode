@@ -13,7 +13,7 @@ import EditorFooter from "./EditorFooter"
 import EditorToolbars from "./EditorToolbars"
 import CodeMirror from "./engine/CodeMirror"
 
-const Editor = ({ updateValue, onRun, onSubmit }) => {
+const Editor = ({ updateValue, onRun, onSubmit, hideFooter, content }) => {
     const [editor, setEditor] = useState()
     const { colorMode } = useColorMode()
     const { theme } = useEditorTheme()
@@ -44,6 +44,12 @@ const Editor = ({ updateValue, onRun, onSubmit }) => {
         if (editor && updateValue) editor.onValueChange(updateValue)
     }, [updateValue, editor])
 
+    useEffect(() => {
+        if (editor && content) {
+            editor.setValue(content)
+        }
+    }, [content, editor])
+
     const handleRun = useCallback(() => {
         if (editor) {
             onRun(editor.getValue())
@@ -67,7 +73,9 @@ const Editor = ({ updateValue, onRun, onSubmit }) => {
             <EditorThemeProvider colorMode={colorMode}>
                 <EditorToolbars />
                 <Textarea onChange={console.log} ref={textareaRef} />
-                <EditorFooter onRun={handleRun} onSubmit={handleSubmit} />
+                {hideFooter === false && (
+                    <EditorFooter onRun={handleRun} onSubmit={handleSubmit} />
+                )}
             </EditorThemeProvider>
         </Flex>
     )

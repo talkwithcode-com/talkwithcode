@@ -36,3 +36,18 @@ export const GET_QUESTION_BY_ID = gql`
         }
     }
 `
+
+export const SHARE_SCREEN = gql`
+    mutation ShareScreen($user: String!, $content: String!) {
+        postCode(user: $user, content: $content)
+    }
+`
+
+export const LISTEN_SCREEN = gql`
+    subscription ListenScreen {
+        code {
+            content
+            user
+        }
+    }
+`
