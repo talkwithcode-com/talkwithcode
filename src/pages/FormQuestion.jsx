@@ -3,29 +3,29 @@ import {
     Button,
     Flex,
     FormControl,
-    Input,
-    FormLabel,
-    Textarea,
-    Checkbox,
-    Text,
     FormHelperText,
+    FormLabel,
     Heading,
+    Input,
+    Text,
     useToast,
 } from "@chakra-ui/core"
+import jwtdecode from "jwt-decode"
 import React, { useState } from "react"
 import { GoCheck } from "react-icons/go"
 import { useHistory } from "react-router-dom"
+import { Editor } from "../components"
 import Sidebar from "../components/Sidebar"
 import { POST_QUESTION } from "../graphql/index"
-import jwtdecode from "jwt-decode"
 
 export default function FormQuestion() {
     const [form, setForm] = useState({
         title: "",
         timeLimit: "",
         score: "",
-        description: "",
     })
+
+    const [description, setDescription] = useState("")
 
     const [addQuestion] = useMutation(POST_QUESTION)
     const history = useHistory()
@@ -40,7 +40,7 @@ export default function FormQuestion() {
             ...form,
             [name]: value,
         }
-        console.log(newForm)
+
         setForm(newForm)
     }
 
@@ -52,7 +52,7 @@ export default function FormQuestion() {
             timeLimit: form.timeLimit,
             title: form.title,
             score: form.score,
-            description: form.description,
+            description: description,
             user_id: dataUser._id,
             access_token: localStorage.getItem("access_token"),
         }
@@ -74,78 +74,78 @@ export default function FormQuestion() {
     return (
         <>
             <Flex w="100%" h="100vh">
-                <Flex flex="1" bg="#56657F" direction="column" padding="2">
+                <Flex
+                    flex="1"
+                    bg="#56657F"
+                    direction="column"
+                    padding="2"
+                    mr="3"
+                >
                     <Sidebar />
                 </Flex>
-                <Flex
-                    flex="4"
-                    direction="column"
-                    bg="gray.800"
-                    alignItems="center"
-                    justifyContent="center"
-                >
-                    <Heading color="white">Add Your Question Here!</Heading>
-                    <form onSubmit={(event) => handleOnSubmit(event)}>
-                        <FormControl margin={4} pb={4} w="100%">
-                            <FormLabel color="white">Question Title</FormLabel>
-                            <Input
-                                name="title"
-                                value={form.title}
-                                onChange={handleOnChange}
-                                type="text"
-                                placeholder="Put your title here"
-                            />
-                        </FormControl>
-                        <FormControl margin={4} pb={4} w="100%">
-                            <FormLabel color="white">Score</FormLabel>
-                            <Input
-                                name="score"
-                                value={form.score}
-                                onChange={handleOnChange}
-                                type="text"
-                                placeholder="Put your score here"
-                            />
-                            <FormHelperText>
-                                <Text color="white.100">
-                                    This will be used for calculate overall
-                                    score
-                                </Text>
-                            </FormHelperText>
-                        </FormControl>
-                        <FormControl margin={4} pb={4} w="100%">
-                            <FormLabel color="white">Time Limit</FormLabel>
-                            <Input
-                                name="timeLimit"
-                                value={form.timeLimit}
-                                onChange={handleOnChange}
-                                type="text"
-                                placeholder="Put your time limit here"
-                            />
-                            <FormHelperText>
-                                <Text color="white.100">
-                                    Please put time limit in minutes
-                                </Text>
-                            </FormHelperText>
-                        </FormControl>
-                        <FormControl margin={4} pb={4} w="100%">
-                            <FormLabel color="white">Description</FormLabel>
-                            <Textarea
-                                name="description"
-                                value={form.description}
-                                onChange={handleOnChange}
-                                placeholder="Put your description here"
-                            />
-                        </FormControl>
-                        <Button
-                            margin={4}
-                            leftIcon={GoCheck}
-                            variantColor="green"
-                            variant="solid"
-                            type="submit"
-                        >
-                            <Text>Submit</Text>
-                        </Button>
-                    </form>
+                <Flex flex="4" paddingY="8" paddingX="4">
+                    <Flex flex="1" flexDirection="column" paddingX="2" w="80%">
+                        <Heading mb="6">Add Your Question Here!</Heading>
+                        <form onSubmit={(event) => handleOnSubmit(event)}>
+                            <FormControl w="80%" mb="4">
+                                <FormLabel mb="1">Question Title</FormLabel>
+                                <Input
+                                    name="title"
+                                    value={form.title}
+                                    onChange={handleOnChange}
+                                    type="text"
+                                    placeholder="Put your title here"
+                                />
+                            </FormControl>
+                            <FormControl w="80%" mb="4">
+                                <FormLabel mb="1">Score</FormLabel>
+                                <Input
+                                    name="score"
+                                    value={form.score}
+                                    onChange={handleOnChange}
+                                    type="text"
+                                    placeholder="Put your score here"
+                                />
+                                <FormHelperText>
+                                    <Text>
+                                        This will be used for calculate overall
+                                        score
+                                    </Text>
+                                </FormHelperText>
+                            </FormControl>
+                            <FormControl w="80%" mb="4">
+                                <FormLabel mb="1">Time Limit</FormLabel>
+                                <Input
+                                    name="timeLimit"
+                                    value={form.timeLimit}
+                                    onChange={handleOnChange}
+                                    type="text"
+                                    placeholder="Put your time limit here"
+                                />
+                                <FormHelperText>
+                                    <Text>
+                                        Please put time limit in minutes
+                                    </Text>
+                                </FormHelperText>
+                            </FormControl>
+
+                            <Button
+                                mt="6"
+                                leftIcon={GoCheck}
+                                variantColor="green"
+                                variant="solid"
+                                type="submit"
+                            >
+                                <Text>Submit</Text>
+                            </Button>
+                        </form>
+                    </Flex>
+                    <Flex flex="2" boxShadow="xl">
+                        <Editor
+                            content="// Type your question detail here...."
+                            updateValue={setDescription}
+                        />
+                    </Flex>
                 </Flex>
             </Flex>
         </>
